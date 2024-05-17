@@ -1,5 +1,6 @@
 <script setup>
-import { ref,watchEffect,onMounted } from 'vue'
+import {ref, watchEffect, onMounted} from 'vue'
+
 // 导入组件
 // 导入底部组件
 import Footer from './components/Footer.vue'
@@ -18,7 +19,7 @@ const name = ref('')
 // 监听属性
 // watchEffect()函数用来监听一个响应式对象
 watchEffect(() => {
-  console.log('count的值发生了变化', count.value)
+	console.log('count的值发生了变化', count.value)
 })
 
 // v-html
@@ -29,9 +30,9 @@ const text = ref('我是一个文本')
 
 // v-on
 // 更改当前元素的样式
-const changeStyle = (e)=> {
-  e.target.style.color = 'red'
-  e.target.style.fontSize = '20px'
+const changeStyle = (e) => {
+	e.target.style.color = 'red'
+	e.target.style.fontSize = '20px'
 }
 
 // v-bind
@@ -39,8 +40,8 @@ const changeStyle = (e)=> {
 // v-bind:属性名="属性值"
 // 简写：:属性名="属性值"
 const style = ref({
-  color: 'blue',
-  fontSize: '20px',
+	color: 'blue',
+	fontSize: '20px',
 })
 
 // 生命周期
@@ -51,99 +52,99 @@ const mountedCount = ref(0)
 console.log('mountedCount', mountedCount.value);
 // onMounted()函数表示当前组件挂载完成
 onMounted(() => {
-  console.log('mounted!')
+	console.log('mounted!')
 
-  // 当前组件挂载完成后，修改count的值
-  mountedCount.value = 10
+	// 当前组件挂载完成后，修改count的值
+	mountedCount.value = 10
 
-  // 创建一个定时器，每隔1秒修改count的值
-  const timer = setInterval(() => {
-    mountedCount.value++
-  }, 1000)
+	// 创建一个定时器，每隔1秒修改count的值
+	const timer = setInterval(() => {
+		mountedCount.value++
+	}, 1000)
 
-  // 当mountedCount的值发生变化时，执行回调函数
-  watchEffect(() => {
-    console.log('mountedCount的值发生了变化', mountedCount.value)
-    // 当mountedCount的值大于等于15时，清除定时器
-    if (mountedCount.value >= 15) {
-      console.log('清除定时器')
-      clearInterval(timer)
-    }
-  })
+	// 当mountedCount的值发生变化时，执行回调函数
+	watchEffect(() => {
+		console.log('mountedCount的值发生了变化', mountedCount.value)
+		// 当mountedCount的值大于等于15时，清除定时器
+		if (mountedCount.value >= 15) {
+			console.log('清除定时器')
+			clearInterval(timer)
+		}
+	})
 })
 
 // 当前时间
 const now = ref(new Date().toLocaleString())
 // 创建一个定时器，每隔1秒修改now的值
 setInterval(() => {
-  now.value = new Date().toLocaleString()
+	now.value = new Date().toLocaleString()
 }, 1000)
 
 </script>
 
 <template>
-  <Nav />
-  <div>
-    <h1>Hello world</h1>
-    <p>count值: {{ count }}</p>
-    <button @click="count++">增加count</button>
-    <button @click="count--">减少count</button>
+	<Nav/>
+	<div>
+		<h1>Hello world</h1>
+		<p>count值: {{ count }}</p>
+		<button @click="count++">增加count</button>
+		<button @click="count--">减少count</button>
 
-    <h2>计算属性</h2>
-    <p>count的平方: {{ count * count }}</p>
+		<h2>计算属性</h2>
+		<p>count的平方: {{ count * count }}</p>
 
-    <h2>监听属性</h2>
-    <p>count的值: {{ count }}</p>
+		<h2>监听属性</h2>
+		<p>count的值: {{ count }}</p>
 
-    <h2>双向绑定</h2>
-    在这里输入内容：<input type="text" v-model="name" />
-    <br>
-    <p>name的值会发生变化</p>
-    <p>name的值: {{ name }}</p>
+		<h2>双向绑定</h2>
+		在这里输入内容：<input type="text" v-model="name"/>
+		<br>
+		<p>name的值会发生变化</p>
+		<p>name的值: {{ name }}</p>
 
-    <div>
-      <h2>v-html</h2>
-      <div v-html="html"></div>
-    </div>
+		<div>
+			<h2>v-html</h2>
+			<div v-html="html"></div>
+		</div>
 
-    <div>
-      <h2>v-text</h2>
-      <div v-text="text"></div>
-    </div>
+		<div>
+			<h2>v-text</h2>
+			<div v-text="text"></div>
+		</div>
 
-    <div>
-      <h2>v-bind</h2>
-      <p>点击下面的文字，会改变文字的颜色和大小</p>
-      <p @click="changeStyle">点我</p>
-    </div>
+		<div>
+			<h2>v-bind</h2>
+			<p>点击下面的文字，会改变文字的颜色和大小</p>
+			<p @click="changeStyle">点我</p>
+		</div>
 
-    <div>
-      <h2>v-bind</h2>
-      <p :style="style">我是一个文本</p>
-      <p :style="{color: 'red', fontSize: '30px'}">我是一个文本</p>
-    </div>
+		<div>
+			<h2>v-bind</h2>
+			<p :style="style">我是一个文本</p>
+			<p :style="{color: 'red', fontSize: '30px'}">我是一个文本</p>
+		</div>
 
-    <div>
-      <h2>生命周期</h2>
-      <p>mountedCount的值: {{ mountedCount }}</p>
-    </div>
+		<div>
+			<h2>生命周期</h2>
+			<p>mountedCount的值: {{ mountedCount }}</p>
+		</div>
 
-    <div>
-      <h2>当前时间</h2>
-      <p>当前时间: {{ now }}</p>
-    </div>
+		<div>
+			<h2>当前时间</h2>
+			<p>当前时间: {{ now }}</p>
+		</div>
 
-  </div>
+	</div>
 
-  Footer组件
-  <Footer />
+	Footer组件
+	<Footer/>
 </template>
 
 <!-- 如果要支持sass、less等预处理器，需要另外安装 -->
 <style scoped>
 /* scoped表示当前样式只在当前组件生效 */
 h2 {
-  margin: 5px;
+	margin: 5px;
 }
 </style>
 
