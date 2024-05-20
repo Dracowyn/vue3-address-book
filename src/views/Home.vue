@@ -1,5 +1,6 @@
 <script setup>
 import {ref} from "vue";
+import router from "@/router/index.js";
 
 const fieldValue = ref('');
 const showPicker = ref(false);
@@ -46,11 +47,23 @@ const onLoad = () => {
 	}, 1000);
 };
 
+// 登录按钮
+const onLogin = () => {
+	router.push('/login');
+};
+
 </script>
 
 <template>
 	<!-- 导航栏 -->
-	<van-nav-bar title="通讯录"/>
+	<van-nav-bar
+		title="通讯录"
+		@clickRight="onLogin"
+	>
+		<template #right>
+			<van-icon name="user-o" />
+		</template>
+	</van-nav-bar>
 
 	<!-- 选择器（分类选择） -->
 	<van-field
