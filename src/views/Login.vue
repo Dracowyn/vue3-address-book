@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import {showNotify} from "vant";
 import business from "@/api/business.js";
@@ -10,6 +10,40 @@ const password = ref('');
 
 // 设置cookie
 const {cookies} = useCookies();
+
+// 验证是否登录
+const checkLogin = async () => {
+	let userInfo = JSON.stringify(cookies.get('business'));
+	// 验证是否登录
+	const mobile = JSON.parse(userInfo).mobile;
+	const id = JSON.parse(userInfo).id;
+	const data = {
+		mobile,
+		id,
+	}
+	let result = await business.check(data);
+	console.log(result);
+	if (result.code === 1) {
+		showNotify({
+			type: 'success',
+			message: '您已经登录',
+			duration: 1500,
+		})
+		await router.push('/');
+	} else {
+		showNotify({
+			type: 'warning',
+			message: '请先登录',
+			duration: 1500,
+		})
+		// 清空cookie
+		cookies.remove('business');
+	}
+}
+
+onMounted(() => {
+	checkLogin();
+})
 
 // 提交
 const onSubmit = async (values) => {

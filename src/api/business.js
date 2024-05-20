@@ -13,6 +13,12 @@ const Business = {
 			url: '/business/register',
 			params: data
 		})
+	},
+	check(data) {
+		return POST({
+			url: '/business/check',
+			params: data
+		})
 	}
 }
 
