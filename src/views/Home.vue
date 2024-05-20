@@ -79,7 +79,16 @@ const onLoad = () => {
 		finished-text="没有更多了"
 		@load="onLoad"
 	>
-		<van-cell v-for="item in list" :key="item" :title="item"/>
+		<!-- 滑动单元格 -->
+		<van-swipe-cell v-for="item in list">
+			<!-- 单元格内容 -->
+			<van-cell :key="item" :title="item" label="描述内容"/>
+			<!-- 右侧操作 -->
+			<template #right>
+				<van-button square type="primary" style="height: 100%">编辑</van-button>
+				<van-button square type="danger" style="height: 100%">删除</van-button>
+			</template>
+		</van-swipe-cell>
 	</van-list>
 </template>
 
