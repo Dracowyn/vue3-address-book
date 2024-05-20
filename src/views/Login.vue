@@ -35,11 +35,13 @@ const checkLogin = async () => {
 		mobile,
 		id,
 	}
+
+	// 发起验证请求
 	let result = await business.check(data);
 
 	console.log(result);
 
-	console.log(result);
+	// 如果code为1则验证成功
 	if (result.code === 1) {
 		showNotify({
 			type: 'success',
@@ -61,7 +63,9 @@ const checkLogin = async () => {
 	}
 }
 
+// 当组件挂载时执行
 onMounted(() => {
+	// 验证是否登录
 	checkLogin();
 })
 
@@ -101,6 +105,7 @@ const onSubmit = async (values) => {
 		// 跳转到首页
 		await router.push('/');
 	} else {
+		// 提示错误
 		showNotify({
 			type: 'danger',
 			message: result.msg,
