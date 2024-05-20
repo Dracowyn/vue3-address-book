@@ -10,12 +10,19 @@ const router = createRouter({
 			component: () => import('../views/Home.vue')
 		},
 
-        // 登录
-      {
-        path: '/login',
-        name: 'Login',
-        component: () => import('../views/Login.vue')
-      },
+		// 登录
+		{
+			path: '/login',
+			name: 'Login',
+			component: () => import('../views/Login.vue')
+		},
+
+		// 注册
+		{
+			path: '/register',
+			name: 'Register',
+			component: () => import('../views/Register.vue')
+		},
 
 	]
 })

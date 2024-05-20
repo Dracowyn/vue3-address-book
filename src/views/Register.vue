@@ -1,0 +1,93 @@
+<script setup>
+import {ref} from "vue";
+import router from "@/router/index.js";
+import {showToast} from "vant";
+
+
+const username = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const onSubmit = (values) => {
+	// 校验两次输入密码是否一致
+	if (password.value !== confirmPassword.value) {
+		showToast('两次输入密码不一致');
+		return
+	}
+
+	console.log('submit', values);
+};
+
+// 返回
+const onBack = () => {
+	router.go(-1);
+};
+</script>
+
+<template>
+	<van-nav-bar
+		title="注册"
+		left-text="返回"
+		left-arrow
+		@click-left="onBack"
+	/>
+	<div id="main">
+		<van-image
+			round
+			width="8rem"
+			height="8rem"
+			src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+		/>
+		<van-form @submit="onSubmit">
+			<van-cell title="注册账号" size="large" style="text-align: center"/>
+			<van-cell-group inset>
+				<van-field
+					v-model="username"
+					name="用户名"
+					label="用户名"
+					placeholder="用户名"
+					:rules="[{ required: true, message: '请填写用户名' }]"
+				/>
+				<van-field
+					v-model="password"
+					type="password"
+					name="密码"
+					label="密码"
+					placeholder="密码"
+					:rules="[{ required: true, message: '请填写密码' }]"
+				/>
+				<van-field
+					v-model="confirmPassword"
+					type="password"
+					name="确认密码"
+					label="确认密码"
+					placeholder="确认密码"
+					:rules="[{ required: true, message: '请填写确认密码' }]"
+				/>
+			</van-cell-group>
+
+			<router-link to="/login">
+				<van-cell center title="已有账号？去登录"/>
+			</router-link>
+
+			<div style="margin: 10px;">
+				<van-button round block type="primary" native-type="submit">
+					提交
+				</van-button>
+			</div>
+		</van-form>
+	</div>
+</template>
+
+<style scoped lang="scss">
+#main {
+	display: flex;
+	height: calc(100vh - 46px);
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	.van-image {
+		margin-bottom: 20px;
+	}
+}
+</style>
