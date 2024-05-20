@@ -13,27 +13,47 @@ const {cookies} = useCookies();
 
 // 验证是否登录
 const checkLogin = async () => {
+	// 读取cookie
 	let userInfo = JSON.stringify(cookies.get('business'));
+	// 转换为对象
+	userInfo = JSON.parse(userInfo);
+
+	console.log(userInfo);
+
+	// 读取userInfo，如果不存在则停止执行后边的代码
+	if (!userInfo) {
+		return;
+	}
+
 	// 验证是否登录
-	const mobile = JSON.parse(userInfo).mobile;
-	const id = JSON.parse(userInfo).id;
+
+	// 如果无法获取手机号则留空
+	const mobile = userInfo.mobile || '';
+	const id = userInfo.id || '';
+
 	const data = {
 		mobile,
 		id,
 	}
 	let result = await business.check(data);
+
+	console.log(result);
+
 	console.log(result);
 	if (result.code === 1) {
 		showNotify({
 			type: 'success',
 			message: '您已经登录',
 			duration: 1500,
+			// 关闭后跳转到首页
+			onClose: () => {
+				router.push('/');
+			}
 		})
-		await router.push('/');
 	} else {
 		showNotify({
 			type: 'warning',
-			message: '请先登录',
+			message: '非法登录',
 			duration: 1500,
 		})
 		// 清空cookie
