@@ -1,11 +1,49 @@
 <script setup>
 import {ref} from "vue";
 import router from "@/router/index.js";
+import {showNotify} from "vant";
+import business from "@/api/business.js";
 
-const username = ref('');
+const mobile = ref('');
 const password = ref('');
-const onSubmit = (values) => {
+
+const onSubmit = async (values) => {
 	console.log('submit', values);
+	// 校验手机号
+	if (!/^1[3456789]\d{9}$/.test(mobile.value)) {
+		showNotify({
+			type: 'warning',
+			message: '手机号格式错误',
+			duration: 1500,
+		})
+		return;
+	}
+
+	let data = {
+		mobile: mobile.value,
+		password: password.value,
+	}
+
+	// 发起亲够
+	let result = await business.login(data);
+
+	// 打印结果
+	console.log(result)
+
+	if (result.code === 1) {
+		showNotify({
+			type: 'success',
+			message: '登录成功',
+			duration: 1500,
+		})
+		// await router.push('/');
+	} else {
+		showNotify({
+			type: 'danger',
+			message: result.msg,
+			duration: 1500,
+		})
+	}
 };
 
 // 返回
@@ -32,11 +70,11 @@ const onBack = () => {
 			<van-cell title="登录" size="large" style="text-align: center"/>
 			<van-cell-group inset>
 				<van-field
-					v-model="username"
-					name="用户名"
-					label="用户名"
-					placeholder="用户名"
-					:rules="[{ required: true, message: '请填写用户名' }]"
+					v-model="mobile"
+					name="手机号"
+					label="手机号"
+					placeholder="手机号"
+					:rules="[{ required: true, message: '请填写手机号' }]"
 				/>
 				<van-field
 					v-model="password"
