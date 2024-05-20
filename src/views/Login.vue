@@ -3,10 +3,15 @@ import {ref} from "vue";
 import router from "@/router/index.js";
 import {showNotify} from "vant";
 import business from "@/api/business.js";
+import {useCookies} from "vue3-cookies";
 
 const mobile = ref('');
 const password = ref('');
 
+// 设置cookie
+const {cookies} = useCookies();
+
+// 提交
 const onSubmit = async (values) => {
 	console.log('submit', values);
 	// 校验手机号
@@ -36,7 +41,11 @@ const onSubmit = async (values) => {
 			message: '登录成功',
 			duration: 1500,
 		})
-		// await router.push('/');
+		// 设置cookie
+		cookies.set('business', result.data);
+
+		// 跳转到首页
+		await router.push('/');
 	} else {
 		showNotify({
 			type: 'danger',
