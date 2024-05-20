@@ -13,6 +13,9 @@ const loading = ref(false);
 // 是否加载完成
 const finished = ref(false);
 
+// 激活的底部导航栏标签
+const active = ref('index');
+
 // 分类选择器数据
 const columns = [
 	{text: '杭州', value: 'Hangzhou'},
@@ -47,9 +50,9 @@ const onLoad = () => {
 	}, 1000);
 };
 
-// 登录按钮
-const onLogin = () => {
-	router.push('/login');
+// 新增通讯录按钮
+const onAdd = () => {
+	router.push('/address/add');
 };
 
 </script>
@@ -58,11 +61,10 @@ const onLogin = () => {
 	<!-- 导航栏 -->
 	<van-nav-bar
 		title="通讯录"
-		@clickRight="onLogin"
+		right-text="新增"
+		@clickRight="onAdd"
+		fixed
 	>
-		<template #right>
-			<van-icon name="user-o" />
-		</template>
 	</van-nav-bar>
 
 	<!-- 选择器（分类选择） -->
@@ -73,6 +75,7 @@ const onLogin = () => {
 		label="分类"
 		placeholder="选择分类"
 		@click="showPicker = true"
+		style="margin-top: 46px"
 	/>
 	<van-popup v-model:show="showPicker" round position="bottom">
 		<van-picker
@@ -103,6 +106,12 @@ const onLogin = () => {
 			</template>
 		</van-swipe-cell>
 	</van-list>
+
+	<van-tabbar v-model="active">
+		<van-tabbar-item icon="wap-home-o" name="index" to="/">主页</van-tabbar-item>
+		<van-tabbar-item icon="list-switch" name="type" to="/type">分类</van-tabbar-item>
+		<van-tabbar-item icon="user-circle-o" name="my" to="/login">我的</van-tabbar-item>
+	</van-tabbar>
 </template>
 
 <style scoped lang="scss">
