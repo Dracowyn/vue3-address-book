@@ -22,6 +22,12 @@ const onBack = () => {
 		@click-left="onBack"
 	/>
 	<div id="main">
+		<van-image
+			round
+			width="8rem"
+			height="8rem"
+			src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
+		/>
 		<van-form @submit="onSubmit">
 			<van-cell title="登录" size="large" style="text-align: center"/>
 			<van-cell-group inset>
@@ -59,9 +65,12 @@ const onBack = () => {
 #main {
 	display: flex;
 	height: calc(100vh - 46px);
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 
-	.van-form {
-		margin: auto;
+	.van-image {
+		margin-bottom: 20px;
 	}
 }
 </style>
