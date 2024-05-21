@@ -1,8 +1,9 @@
 <script setup>
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import address from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
+import type from "@/api/type.js";
 
 const fieldValue = ref('');
 const showPicker = ref(false);
@@ -19,6 +20,13 @@ const loading = ref(false);
 // 是否加载完成
 const finished = ref(false);
 
+// 分类选择数据
+const typeList = ref([
+	{text: '全部', value: 0},
+]);
+// 分类ID
+const typeId = ref(0);
+
 // 激活的底部导航栏标签
 const active = ref('index');
 
@@ -31,19 +39,47 @@ userInfo = JSON.parse(userInfo);
 
 console.log(userInfo)
 
-// 分类选择器数据
-const columns = [
-	{text: '杭州', value: 'Hangzhou'},
-	{text: '宁波', value: 'Ningbo'},
-	{text: '温州', value: 'Wenzhou'},
-	{text: '绍兴', value: 'Shaoxing'},
-	{text: '湖州', value: 'Huzhou'},
-];
+// 获取分类列表
+const getTypeList = async () => {
+	const data = {
+		id: userInfo.id,
+		mobile: userInfo.mobile,
+	}
+
+	const result = await type.all(data);
+
+	console.log(result);
+
+	if (result.code === 1) {
+		// 转换数据格式并更新
+		typeList.value.push(...result.data.map(item => {
+			return {
+				text: item.name,
+				value: item.id,
+			}
+		}));
+	} else {
+		console.log(result);
+	}
+};
 
 // 确认选择分类
 const onConfirm = ({selectedOptions}) => {
 	showPicker.value = false;
 	fieldValue.value = selectedOptions[0].text;
+	typeId.value = selectedOptions[0].value;
+	console.log(fieldValue.value)
+	console.log(selectedOptions[0].value)
+
+	// 更新列表数据
+	list.value = [];
+	listCount.value = 0;
+	page.value = 1;
+	loading.value = true;
+	finished.value = false;
+
+	// 重新加载通讯录列表
+	onLoad();
 };
 
 // 加载通讯录列表
@@ -54,6 +90,7 @@ const onLoad = async () => {
 		mobile: userInfo.mobile,
 		page: page.value,
 		limit: 10,
+		type_id: typeId.value,
 	}
 
 	// 发起请求
@@ -81,6 +118,10 @@ const onLoad = async () => {
 	}
 
 };
+
+onMounted(() => {
+	getTypeList();
+});
 
 // 新增通讯录按钮
 const onAdd = () => {
@@ -111,7 +152,7 @@ const onAdd = () => {
 	/>
 	<van-popup v-model:show="showPicker" round position="bottom">
 		<van-picker
-			:columns="columns"
+			:columns="typeList"
 			@cancel="showPicker = false"
 			@confirm="onConfirm"
 		/>
