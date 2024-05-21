@@ -16,19 +16,6 @@ userInfo = JSON.parse(userInfo);
 
 console.log(userInfo);
 
-// 如果为空则跳转到登录页
-if (!userInfo) {
-	showNotify({
-		type: 'warning',
-		message: '请先登录',
-		duration: 1500,
-		// 关闭后跳转到登录页
-		onClose: () => {
-			router.push('/login');
-		}
-	});
-}
-
 // 获取头像
 const getAvatar = () => {
 	// 获取头像
