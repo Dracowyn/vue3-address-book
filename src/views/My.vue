@@ -2,12 +2,12 @@
 import {ref} from "vue";
 import router from "@/router/index.js";
 import {useCookies} from "vue3-cookies";
-import {showNotify, showToast} from "vant";
+import {showToast} from "vant";
 
 // 激活的底部导航栏标签
 const active = ref('my');
 
-// 设置cookie
+// 获取cookie
 const {cookies} = useCookies();
 // 读取cookie
 let userInfo = JSON.stringify(cookies.get('business'));
