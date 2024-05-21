@@ -110,7 +110,7 @@ const onAdd = () => {
 	<van-tabbar v-model="active">
 		<van-tabbar-item icon="wap-home-o" name="index" to="/">主页</van-tabbar-item>
 		<van-tabbar-item icon="list-switch" name="type" to="/type">分类</van-tabbar-item>
-		<van-tabbar-item icon="user-circle-o" name="my" to="/login">我的</van-tabbar-item>
+		<van-tabbar-item icon="user-circle-o" name="my" to="/my">我的</van-tabbar-item>
 	</van-tabbar>
 </template>
 
