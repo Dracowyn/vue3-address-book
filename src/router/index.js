@@ -14,6 +14,17 @@ const router = createRouter({
 			}
 		},
 
+		// 通讯录名片详情
+		{
+			path: '/card/info/:id',
+			name: 'CardInfo',
+			component: () => import('../views/CardInfo.vue'),
+			meta: {
+				title: '通讯录详情',
+				auto: true,
+			}
+		},
+
 		// 登录
 		{
 			path: '/login',

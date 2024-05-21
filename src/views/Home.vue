@@ -172,6 +172,11 @@ const onDelete = async (id) => {
 	}
 };
 
+// 通讯录详情
+const onDetail = (id) => {
+	router.push(`/card/info/${id}`);
+};
+
 onMounted(() => {
 	getTypeList();
 });
@@ -233,7 +238,7 @@ const onAdd = () => {
 		<!-- 滑动单元格 -->
 		<van-swipe-cell v-for="item in list">
 			<!-- 单元格内容 -->
-			<van-cell :key="item.id" :title="item.nickname" :label="item.mobile"/>
+			<van-cell :key="item.id" :title="item.nickname" :label="item.mobile" @click="onDetail(item.id)"/>
 			<!-- 右侧操作 -->
 			<template #right>
 				<van-button square type="primary" style="height: 100%">编辑</van-button>
