@@ -1,20 +1,56 @@
 <script setup>
 import {ref} from "vue";
 import router from "@/router/index.js";
-import {showToast} from "vant";
+import {showNotify, showToast} from "vant";
+import business from "@/api/business.js";
 
 
-const username = ref('');
+const mobile = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const onSubmit = (values) => {
+
+const onSubmit = async (values) => {
 	// 校验两次输入密码是否一致
 	if (password.value !== confirmPassword.value) {
 		showToast('两次输入密码不一致');
 		return
 	}
 
+	// 校验手机号格式
+	if (!/^1[3456789]\d{9}$/.test(mobile.value)) {
+		showToast('手机号格式错误');
+		return
+	}
+
 	console.log('submit', values);
+
+	// 封装请求参数
+	const data = {
+		mobile: mobile.value,
+		password: password.value
+	};
+
+	const result = await business.register(data);
+
+	console.log(result);
+
+	if (result.code === 1) {
+		showNotify({
+			type: 'success',
+			message: '注册成功',
+			duration: 1500,
+			// 注册成功之后跳转到登录页面
+			onClose: () => {
+				router.push('/login');
+			}
+		})
+	} else {
+		showNotify({
+			type: 'warning',
+			message: result.msg,
+			duration: 1500,
+		})
+	}
 };
 
 // 返回
@@ -41,11 +77,11 @@ const onBack = () => {
 			<van-cell title="注册账号" size="large" style="text-align: center"/>
 			<van-cell-group inset>
 				<van-field
-					v-model="username"
-					name="用户名"
-					label="用户名"
-					placeholder="用户名"
-					:rules="[{ required: true, message: '请填写用户名' }]"
+					v-model="mobile"
+					name="手机号"
+					label="手机号"
+					placeholder="手机号"
+					:rules="[{ required: true, message: '请填写手机号' }]"
 				/>
 				<van-field
 					v-model="password"
