@@ -5,8 +5,12 @@ import address from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
 
+// 分类选择数据
 const fieldValue = ref('');
+// 是否显示选择器
 const showPicker = ref(false);
+
+// 搜索关键词
 const search = ref('');
 
 // 通讯录列表数据
@@ -82,6 +86,19 @@ const onConfirm = ({selectedOptions}) => {
 	onLoad();
 };
 
+// 搜索关键词
+const onSearch = () => {
+	// 更新列表数据
+	list.value = [];
+	listCount.value = 0;
+	page.value = 1;
+	loading.value = true;
+	finished.value = false;
+
+	// 重新加载通讯录列表
+	onLoad();
+};
+
 // 加载通讯录列表
 const onLoad = async () => {
 	// 封装请求参数
@@ -91,6 +108,7 @@ const onLoad = async () => {
 		page: page.value,
 		limit: 10,
 		type_id: typeId.value,
+		search: search.value,
 	}
 
 	// 发起请求
@@ -159,7 +177,16 @@ const onAdd = () => {
 	</van-popup>
 
 	<!-- 搜索-->
-	<van-search v-model="search" placeholder="请输入搜索关键词"/>
+	<van-search
+		v-model="search"
+		@search="onSearch"
+		placeholder="请输入搜索关键词"
+		show-action
+	>
+		<template #action>
+			<div @click="onSearch">搜索</div>
+		</template>
+	</van-search>
 
 	<!-- 通讯录列表 -->
 	<van-list
