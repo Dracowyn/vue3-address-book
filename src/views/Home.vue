@@ -1,9 +1,10 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
-import address from "@/api/card.js";
+import card from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
+import {showToast} from "vant";
 
 // 分类选择数据
 const fieldValue = ref('');
@@ -112,7 +113,7 @@ const onLoad = async () => {
 	}
 
 	// 发起请求
-	const result = await address.index(data);
+	const result = await card.index(data);
 
 	if (result.code === 1) {
 		// 更新列表数据
@@ -137,13 +138,47 @@ const onLoad = async () => {
 
 };
 
+// 删除通讯录
+const onDelete = async (id) => {
+	const data = {
+		id: userInfo.id,
+		mobile: userInfo.mobile,
+		card_id: id,
+	}
+
+	console.log(data)
+
+	const result = await card.del(data);
+
+	if (result.code === 1) {
+		// 提示
+		showToast({
+			type: 'success',
+			message: '删除成功',
+			duration: 1500,
+			onClose: () => {
+				// 更新列表数据
+				list.value = [];
+				listCount.value = 0;
+				page.value = 1;
+				loading.value = true;
+				finished.value = false;
+				// 重新加载通讯录列表
+				onLoad();
+			}
+		});
+	} else {
+		console.log(result);
+	}
+};
+
 onMounted(() => {
 	getTypeList();
 });
 
 // 新增通讯录按钮
 const onAdd = () => {
-	router.push('/address/add');
+	router.push('/card/add');
 };
 
 </script>
@@ -202,7 +237,7 @@ const onAdd = () => {
 			<!-- 右侧操作 -->
 			<template #right>
 				<van-button square type="primary" style="height: 100%">编辑</van-button>
-				<van-button square type="danger" style="height: 100%">删除</van-button>
+				<van-button square type="danger" style="height: 100%" @click="onDelete(item.id)">删除</van-button>
 			</template>
 		</van-swipe-cell>
 	</van-list>
