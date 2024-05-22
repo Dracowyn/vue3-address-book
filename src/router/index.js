@@ -18,7 +18,7 @@ const router = createRouter({
 		{
 			path: '/card/info/:id',
 			name: 'CardInfo',
-			component: () => import('../views/CardInfo.vue'),
+			component: () => import('../views/card/Info.vue'),
 			meta: {
 				title: '通讯录详情',
 				auto: true,
