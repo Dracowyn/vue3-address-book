@@ -58,8 +58,10 @@ onMounted(() => {
 	<van-nav-bar
 		title="联系人详情"
 		left-text="返回"
+		right-text="编辑"
 		left-arrow
 		@click-left="() => router.back()"
+		@click-right="() => router.push(`/card/edit/${cardId}`)"
 	>
 	</van-nav-bar>
 	<van-cell-group>

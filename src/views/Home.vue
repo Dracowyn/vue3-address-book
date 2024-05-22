@@ -176,6 +176,10 @@ const onDelete = async (id) => {
 const onDetail = (id) => {
 	router.push(`/card/info/${id}`);
 };
+// 编辑通讯录按钮
+const onEdit = (id) => {
+	router.push(`/card/edit/${id}`);
+};
 
 onMounted(() => {
 	getTypeList();
@@ -241,7 +245,7 @@ const onAdd = () => {
 			<van-cell :key="item.id" :title="item.nickname" :label="item.mobile" @click="onDetail(item.id)"/>
 			<!-- 右侧操作 -->
 			<template #right>
-				<van-button square type="primary" style="height: 100%">编辑</van-button>
+				<van-button square type="primary" style="height: 100%" @click="onEdit(item.id)">编辑</van-button>
 				<van-button square type="danger" style="height: 100%" @click="onDelete(item.id)">删除</van-button>
 			</template>
 		</van-swipe-cell>

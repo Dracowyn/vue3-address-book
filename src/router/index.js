@@ -24,6 +24,16 @@ const router = createRouter({
 				auto: true,
 			}
 		},
+		// 编辑通讯录名片
+		{
+			path: '/card/edit/:id',
+			name: 'CardEdit',
+			component: () => import('../views/card/Edit.vue'),
+			meta: {
+				title: '编辑联系人',
+				auto: true,
+			}
+		},
 
 		// 登录
 		{
