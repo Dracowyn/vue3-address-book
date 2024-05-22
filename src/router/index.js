@@ -34,6 +34,16 @@ const router = createRouter({
 				auto: true,
 			}
 		},
+		// 新增通讯录名片
+		{
+			path: '/card/add',
+			name: 'CardAdd',
+			component: () => import('../views/card/Add.vue'),
+			meta: {
+				title: '新增联系人',
+				auto: true,
+			}
+		},
 
 		// 登录
 		{
