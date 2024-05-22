@@ -4,7 +4,7 @@ import router from "@/router/index.js";
 import card from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
-import {showToast} from "vant";
+import {showConfirmDialog, showToast} from "vant";
 
 // 分类选择数据
 const fieldValue = ref('');
@@ -140,6 +140,23 @@ const onLoad = async () => {
 
 // 删除通讯录
 const onDelete = async (id) => {
+	// 弹出确认框
+	showConfirmDialog({
+		title: '删除提示',
+		message: '确定要删除该联系人吗？',
+		confirmButtonText: '删除',
+		cancelButtonText: '取消',
+	}).then(() => {
+		// 确认删除
+		onConfirmDelete(id);
+	}).catch(() => {
+		// 取消删除
+		console.log('取消删除');
+	});
+};
+
+// 确认删除
+const onConfirmDelete = async (id) => {
 	const data = {
 		id: userInfo.id,
 		mobile: userInfo.mobile,
