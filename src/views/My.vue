@@ -2,7 +2,7 @@
 import {ref} from "vue";
 import router from "@/router/index.js";
 import {useCookies} from "vue3-cookies";
-import {showToast} from "vant";
+import {showConfirmDialog, showToast} from "vant";
 
 // 激活的底部导航栏标签
 const active = ref('my');
@@ -29,16 +29,25 @@ const getAvatar = () => {
 
 // 退出登录
 const logout = () => {
-	// 清除cookie
-	cookies.remove('business');
-	// 提示
-	showToast({
-		type: 'success',
-		message: '退出成功',
-		duration: 1500,
-		// 关闭后跳转到登录页
-		onClose: () => {
-			router.push('/login');
+	showConfirmDialog({
+		title: '退出登录',
+		message: '确定要退出登录吗？',
+		confirmButtonText: '退出',
+		overlay: true,
+		// 确认退出
+		onConfirm: () => {
+			// 清除cookie
+			cookies.remove('business');
+			// 提示
+			showToast({
+				type: 'success',
+				message: '退出成功',
+				duration: 1500,
+				// 关闭后跳转到登录页
+				onClose: () => {
+					router.push('/login');
+				}
+			});
 		}
 	});
 };
