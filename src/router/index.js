@@ -20,7 +20,7 @@ const router = createRouter({
 			name: 'CardInfo',
 			component: () => import('../views/card/Info.vue'),
 			meta: {
-				title: '通讯录详情',
+				title: '联系人详情',
 				auto: true,
 			}
 		},
