@@ -4,7 +4,7 @@ import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import card from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
-import {showToast} from "vant";
+import {showConfirmDialog, showToast} from "vant";
 
 // 获取cookie
 const {cookies} = useCookies();
@@ -48,6 +48,54 @@ const getCardInfo = async () => {
 	}
 };
 
+// 确认删除联系人提示
+const confirmDelete = () => {
+	showConfirmDialog({
+		title: '删除联系人',
+		message: '确定要删除该联系人吗？',
+		confirmButtonText: '删除',
+		overlay: true,
+		// 确认删除
+		onConfirm: () => {
+			deleteCard();
+		}
+	});
+};
+
+// 删除联系人
+const deleteCard = async () => {
+	const data = {
+		id: userInfo.id,
+		mobile: userInfo.mobile,
+		card_id: cardId,
+	}
+
+	const result = await card.del(data);
+
+	console.log(result);
+
+	if (result.code === 1) {
+		// 提示
+		showToast({
+			type: 'success',
+			message: result.msg,
+			duration: 1500,
+			// 关闭后跳转到首页
+			onClose: () => {
+				router.push('/');
+			}
+		});
+	} else {
+		// 提示
+		showToast({
+			type: 'fail',
+			message: result.msg,
+			duration: 1500,
+		});
+	}
+};
+
+
 onMounted(() => {
 	getCardInfo();
 })
@@ -72,8 +120,22 @@ onMounted(() => {
 		<van-cell title="分类" :value="cardInfo.type_text"/>
 		<van-cell title="备注" :label="cardInfo.remark"/>
 	</van-cell-group>
+
+	<div class="button-box">
+		<van-button
+			type="danger"
+			block
+			@click="confirmDelete"
+			style="margin:auto"
+		>
+			删除联系人
+		</van-button>
+	</div>
 </template>
 
 <style scoped lang="scss">
-
+.button-box {
+	width: 100%;
+	padding: var(--van-cell-vertical-padding) var(--van-cell-horizontal-padding);
+}
 </style>
