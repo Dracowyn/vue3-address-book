@@ -3,6 +3,7 @@ import {onMounted, ref} from "vue";
 
 import router from "@/router/index.js";
 import card from "@/api/card.js";
+import type from "@/api/type.js";
 import {useCookies} from "vue3-cookies";
 import {showNotify, showToast} from "vant";
 
@@ -20,7 +21,7 @@ const cardInfo = ref({});
 
 const nickname = ref('')
 const cardMobile = ref('')
-const gender = ref(0)
+const gender = ref('0')
 
 const remark = ref('')
 
@@ -93,7 +94,6 @@ const getCardInfo = async () => {
 
 // 选择地区
 import {areaList} from '@vant/area-data';
-import type from "@/api/type.js";
 
 // 定义地区
 const showArea = ref(false);
@@ -247,6 +247,7 @@ onMounted(() => {
 				label="分类"
 				placeholder="选择分类"
 				@click="showPicker = true"
+				:rules="[{ required: true, message: '请选择分类' }]"
 			/>
 			<van-popup v-model:show="showPicker" round position="bottom">
 				<van-picker
