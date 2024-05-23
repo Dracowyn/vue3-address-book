@@ -8,10 +8,10 @@ export const useUserStore = defineStore({
 	id: "user",
 	state: () => {
 		const {cookies} = useCookies();
-		let userInfo = cookies.get('business') || {}; // 添加默认值
+		let userInfo = cookies.get('business') || null; // 添加默认值
 
 		// 如果用户信息存在，访问API更新用户信息
-		if (userInfo && !userInfo !== {}) {
+		if (userInfo) {
 			const data = {
 				id: userInfo.id,
 				mobile: userInfo.mobile,
@@ -22,15 +22,8 @@ export const useUserStore = defineStore({
 				if (res.code === 1) {
 					userInfo = res.data;
 				} else {
-					showNotify({
-						type: 'danger',
-						message: '请先登录',
-						duration: 1500,
-						onClose: () => {
-							userInfo = null;
-							cookies.remove('business');
-						}
-					});
+					userInfo = null;
+					cookies.remove('business');
 				}
 			});
 		}

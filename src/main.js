@@ -6,7 +6,7 @@ import router from './router'
 
 // Vant
 import 'vant/lib/index.css'
-import Vant from 'vant'
+import Vant, {showNotify} from 'vant'
 
 import {createPinia} from "pinia";
 import {useUserStore} from "@/store/userStore.js";
@@ -28,7 +28,12 @@ app.router.beforeEach( async (to, from, next) => {
 		const userStore = useUserStore();
 		const userInfo = userStore.getUserInfo;
 
-		if (!userInfo.id && !userStore.mobile) {
+		if (!userInfo) {
+			showNotify({
+				type: 'danger',
+				message: '请先登录',
+				duration: 1500,
+			});
 			next('/login');
 			return;
 		}
