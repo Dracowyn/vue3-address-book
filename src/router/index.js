@@ -14,7 +14,7 @@ const router = createRouter({
 			}
 		},
 
-		// 通讯录名片详情
+		// 联系人详情
 		{
 			path: '/card/info/:id',
 			name: 'CardInfo',
@@ -24,7 +24,7 @@ const router = createRouter({
 				auto: true,
 			}
 		},
-		// 编辑通讯录名片
+		// 编辑联系人
 		{
 			path: '/card/edit/:id',
 			name: 'CardEdit',
@@ -34,13 +34,13 @@ const router = createRouter({
 				auto: true,
 			}
 		},
-		// 新增通讯录名片
+		// 添加联系人
 		{
 			path: '/card/add',
 			name: 'CardAdd',
 			component: () => import('../views/card/Add.vue'),
 			meta: {
-				title: '新增联系人',
+				title: '添加联系人',
 				auto: true,
 			}
 		},
@@ -62,6 +62,16 @@ const router = createRouter({
 			component: () => import('../views/type/Info.vue'),
 			meta: {
 				title: '分类详情',
+				auto: true,
+			}
+		},
+		// 添加分类
+		{
+			path: '/type/add',
+			name: 'TypeAdd',
+			component: () => import('../views/type/Add.vue'),
+			meta: {
+				title: '添加分类',
 				auto: true,
 			}
 		},
