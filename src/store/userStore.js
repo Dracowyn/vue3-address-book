@@ -20,7 +20,7 @@ export const useUserStore = defineStore({
 			// 获取用户信息
 			business.check(data).then(res => {
 				if (res.code === 1) {
-					this.userInfo = res.data;
+					userInfo = res.data;
 				} else {
 					showNotify({
 						type: 'danger',

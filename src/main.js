@@ -9,7 +9,7 @@ import 'vant/lib/index.css'
 import Vant, {showNotify} from 'vant'
 
 import {createPinia} from "pinia";
-import {useUserStore} from "@/store/user.js";
+import {useUserStore} from "@/store/userStore.js";
 
 const app = createApp(App)
 app.use(router)
