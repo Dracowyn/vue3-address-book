@@ -98,7 +98,7 @@ onMounted(() => {
 	</van-cell-group>
 
 	<div style="margin: 16px;">
-		<van-button round block type="danger">
+		<van-button round block type="danger" @click="onDelete">
 			删除分类
 		</van-button>
 	</div>

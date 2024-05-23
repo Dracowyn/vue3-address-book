@@ -121,7 +121,7 @@ onMounted(() => {
 	</van-cell-group>
 
 	<div style="margin: 16px;">
-		<van-button round block type="danger">
+		<van-button round block type="danger" @click="confirmDelete">
 			删除联系人
 		</van-button>
 	</div>
