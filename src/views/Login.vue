@@ -98,12 +98,13 @@ const onSubmit = async (values) => {
 			type: 'success',
 			message: '登录成功',
 			duration: 1500,
+			onClose: () => {
+				// 设置cookie
+				cookies.set('business', result.data);
+				// 跳转到首页
+				router.push('/');
+			}
 		})
-		// 设置cookie
-		cookies.set('business', result.data);
-
-		// 跳转到首页
-		await router.push('/');
 	} else {
 		// 提示错误
 		showNotify({

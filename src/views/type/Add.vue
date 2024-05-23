@@ -1,16 +1,13 @@
 <script setup>
 import {ref} from "vue";
-import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
 import router from "@/router/index.js";
 import {showNotify} from "vant";
 
-// 获取cookie
-const {cookies} = useCookies();
-// 读取cookie
-let userInfo = JSON.stringify(cookies.get('business'));
-// 转换为对象
-userInfo = JSON.parse(userInfo);
+import {useUserStore} from "@/store/userStore.js";
+
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 console.log(userInfo)
 

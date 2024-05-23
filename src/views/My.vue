@@ -1,18 +1,14 @@
 <script setup>
 import {ref} from "vue";
 import router from "@/router/index.js";
-import {useCookies} from "vue3-cookies";
 import {showConfirmDialog, showToast} from "vant";
+import {useUserStore} from "@/store/userStore.js";
 
 // 激活的底部导航栏标签
 const active = ref('my');
 
-// 获取cookie
-const {cookies} = useCookies();
-// 读取cookie
-let userInfo = JSON.stringify(cookies.get('business'));
-// 转换为对象
-userInfo = JSON.parse(userInfo);
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 console.log(userInfo);
 

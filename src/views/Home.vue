@@ -2,9 +2,9 @@
 import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import card from "@/api/card.js";
-import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
 import {showConfirmDialog, showToast} from "vant";
+import {useUserStore} from "@/store/userStore.js";
 
 // 分类选择数据
 const fieldValue = ref('');
@@ -35,12 +35,8 @@ const typeId = ref(0);
 // 激活的底部导航栏标签
 const active = ref('index');
 
-// 获取cookie
-const {cookies} = useCookies();
-// 读取cookie
-let userInfo = JSON.stringify(cookies.get('business'));
-// 转换为对象
-userInfo = JSON.parse(userInfo);
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 console.log(userInfo)
 

@@ -3,15 +3,12 @@ import {onMounted, ref} from "vue";
 
 import router from "@/router/index.js";
 import card from "@/api/card.js";
-import {useCookies} from "vue3-cookies";
-import {showConfirmDialog, showNotify, showToast} from "vant";
+import {showConfirmDialog, showNotify} from "vant";
 
-// 获取cookie
-const {cookies} = useCookies();
-// 读取cookie
-let userInfo = JSON.stringify(cookies.get('business'));
-// 转换为对象
-userInfo = JSON.parse(userInfo);
+import {useUserStore} from "@/store/userStore.js";
+
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 // 获取通讯录ID
 const cardId = router.currentRoute.value.params.id;

@@ -4,15 +4,14 @@ import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import card from "@/api/card.js";
 import type from "@/api/type.js";
-import {useCookies} from "vue3-cookies";
-import {showNotify, showToast} from "vant";
+import {showNotify} from "vant";
 
-// 获取cookie
-const {cookies} = useCookies();
-// 读取cookie
-let userInfo = JSON.stringify(cookies.get('business'));
-// 转换为对象
-userInfo = JSON.parse(userInfo);
+import {useUserStore} from "@/store/userStore.js";
+// 选择地区
+import {areaList} from '@vant/area-data';
+
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 const nickname = ref('')
 const cardMobile = ref('')
@@ -41,9 +40,6 @@ const onTypeConfirm = ({selectedOptions}) => {
 	console.log(typeValue.value)
 	console.log(selectedOptions[0].value)
 };
-
-// 选择地区
-import {areaList} from '@vant/area-data';
 
 // 定义地区
 const showArea = ref(false);
