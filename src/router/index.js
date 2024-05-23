@@ -1,125 +1,53 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from "vue-router";
 
+// 定义存放路由集合的一个数组
+const RouterList = [];
+
+// 引入每个目录下的index.js文件
+const ModuleFiles = import.meta.glob("./*/index.js", {eager: true});
+
+// 提取每个对象下的值 同步获取
+Object.values(ModuleFiles).map(async (mod) => {
+	if (mod.default) {
+		RouterList.push(...mod.default);
+	}
+});
+
+
+// 把首页组件追加集合里
+RouterList.push({
+	path: "/",
+	name: "Home",
+	component: () => import("@/views/Home.vue"),
+	meta: {
+		title: "通讯录",
+		keywords: "通讯录",
+		description: "通讯录首页",
+	}
+});
+
+// 创建路由
 const router = createRouter({
-	// history模式，文档：https://next.router.vuejs.org/zh/guide/essentials/history-mode.html
-	history: createWebHistory(import.meta.env.BASE_URL),
-	routes: [
-		{
-			path: '/',
-			name: 'Home',
-			component: () => import('../views/Home.vue'),
-			meta: {
-				title: '首页',
-				auto: true,
-			}
-		},
+	history: createWebHistory(),
+	routes: RouterList,
+});
 
-		// 联系人详情
-		{
-			path: '/card/info/:id',
-			name: 'CardInfo',
-			component: () => import('../views/card/Info.vue'),
-			meta: {
-				title: '联系人详情',
-				auto: true,
-			}
-		},
-		// 编辑联系人
-		{
-			path: '/card/edit/:id',
-			name: 'CardEdit',
-			component: () => import('../views/card/Edit.vue'),
-			meta: {
-				title: '编辑联系人',
-				auto: true,
-			}
-		},
-		// 添加联系人
-		{
-			path: '/card/add',
-			name: 'CardAdd',
-			component: () => import('../views/card/Add.vue'),
-			meta: {
-				title: '添加联系人',
-				auto: true,
-			}
-		},
+// 设置文档标题
+router.beforeEach((to, from, next) => {
+	// 如果路由有 meta 并且 meta.title 存在，则设置文档标题
+	if (to.meta) {
+		if (to.meta.title) {
+			document.title = to.meta.title;
+		}
+		if (to.meta.keywords) {
+			document.querySelector('meta[name="keywords"]').setAttribute("content", to.meta.keywords)
+		}
+		if (to.meta.description) {
+			document.querySelector('meta[name="description"]').setAttribute("content", to.meta.description)
+		}
+	}
+	next();
+});
 
-		// 分类
-		{
-			path: '/type',
-			name: 'Type',
-			component: () => import('../views/type/Index.vue'),
-			meta: {
-				title: '分类',
-				auto: true,
-			}
-		},
-		// 分类详情
-		{
-			path: '/type/info/:id',
-			name: 'TypeInfo',
-			component: () => import('../views/type/Info.vue'),
-			meta: {
-				title: '分类详情',
-				auto: true,
-			}
-		},
-		// 添加分类
-		{
-			path: '/type/add',
-			name: 'TypeAdd',
-			component: () => import('../views/type/Add.vue'),
-			meta: {
-				title: '添加分类',
-				auto: true,
-			}
-		},
-		// 编辑分类
-		{
-			path: '/type/edit/:id',
-			name: 'TypeEdit',
-			component: () => import('../views/type/Edit.vue'),
-			meta: {
-				title: '编辑分类',
-				auto: true,
-			}
-		},
-
-		// 登录
-		{
-			path: '/login',
-			name: 'Login',
-			component: () => import('../views/Login.vue'),
-			meta: {
-				title: '登录',
-				auto: false,
-			}
-		},
-
-		// 注册
-		{
-			path: '/register',
-			name: 'Register',
-			component: () => import('../views/Register.vue'),
-			meta: {
-				title: '注册',
-				auto: false,
-			}
-		},
-
-		// 我的
-		{
-			path: '/my',
-			name: 'My',
-			component: () => import('../views/My.vue'),
-			meta: {
-				title: '我的',
-				auto: true,
-			}
-		},
-
-	]
-})
-
-export default router
+// 导出路由
+export default router;
