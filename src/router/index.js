@@ -55,6 +55,16 @@ const router = createRouter({
 				auto: true,
 			}
 		},
+		// 分类详情
+		{
+			path: '/type/info/:id',
+			name: 'TypeInfo',
+			component: () => import('../views/type/Info.vue'),
+			meta: {
+				title: '分类详情',
+				auto: true,
+			}
+		},
 
 		// 登录
 		{

@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {useCookies} from "vue3-cookies";
 import type from "@/api/type.js";
 import router from "@/router/index.js";
