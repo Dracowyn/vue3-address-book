@@ -4,7 +4,7 @@ import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import card from "@/api/card.js";
 import {useCookies} from "vue3-cookies";
-import {showConfirmDialog, showToast} from "vant";
+import {showConfirmDialog, showNotify, showToast} from "vant";
 
 // 获取cookie
 const {cookies} = useCookies();
@@ -35,8 +35,8 @@ const getCardInfo = async () => {
 		cardInfo.value = result.data;
 	} else {
 		// 提示
-		showToast({
-			type: 'fail',
+		showNotify({
+			type: 'danger',
 			message: result.msg,
 			duration: 1500,
 			// 关闭后跳转到首页
@@ -76,7 +76,7 @@ const deleteCard = async () => {
 
 	if (result.code === 1) {
 		// 提示
-		showToast({
+		showNotify({
 			type: 'success',
 			message: result.msg,
 			duration: 1500,
@@ -87,8 +87,8 @@ const deleteCard = async () => {
 		});
 	} else {
 		// 提示
-		showToast({
-			type: 'fail',
+		showNotify({
+			type: 'danger',
 			message: result.msg,
 			duration: 1500,
 		});
@@ -109,9 +109,8 @@ onMounted(() => {
 		right-text="编辑"
 		left-arrow
 		@click-left="() => router.back()"
-		@click-right="() => router.push(`/card/edit/${cardId}`)"
-	>
-	</van-nav-bar>
+		@click-right="() => router.push(`/card/edit/` + cardId)"
+	/>
 	<van-cell-group>
 		<van-cell title="昵称" :value="cardInfo.nickname"/>
 		<van-cell title="手机号" :value="cardInfo.mobile"/>
