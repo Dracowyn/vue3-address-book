@@ -3,64 +3,30 @@ import {onMounted, ref} from "vue";
 import router from "@/router/index.js";
 import {showNotify} from "vant";
 import business from "@/api/business.js";
-import {useCookies} from "vue3-cookies";
+import {useUserStore} from "@/store/userStore.js";
 
 const mobile = ref('');
 const password = ref('');
 
-// 设置cookie
-const {cookies} = useCookies();
+const userStore = useUserStore();
+const userInfo = userStore.getUserInfo;
 
 // 验证是否登录
 const checkLogin = async () => {
-	// 读取cookie
-	let userInfo = JSON.stringify(cookies.get('business'));
-	// 转换为对象
-	userInfo = JSON.parse(userInfo);
 
 	console.log(userInfo);
 
-	// 读取userInfo，如果不存在则停止执行后边的代码
-	if (!userInfo) {
-		return;
-	}
-
-	// 验证是否登录
-
-	// 如果无法获取手机号则留空
-	const mobile = userInfo.mobile || '';
-	const id = userInfo.id || '';
-
-	const data = {
-		mobile,
-		id,
-	}
-
-	// 发起验证请求
-	let result = await business.check(data);
-
-	console.log(result);
-
-	// 如果code为1则验证成功
-	if (result.code === 1) {
+	if (userInfo) {
 		showNotify({
-			type: 'success',
-			message: '您已经登录',
+			type: 'warning',
+			message: '您已登录',
 			duration: 1500,
-			// 关闭后跳转到首页
 			onClose: () => {
 				router.push('/');
 			}
 		})
-	} else {
-		showNotify({
-			type: 'warning',
-			message: '非法登录',
-			duration: 1500,
-		})
-		// 清空cookie
-		cookies.remove('business');
 	}
+
 }
 
 // 当组件挂载时执行
@@ -99,8 +65,7 @@ const onSubmit = async (values) => {
 			message: '登录成功',
 			duration: 1500,
 			onClose: () => {
-				// 设置cookie
-				cookies.set('business', result.data);
+				userStore.setUserInfo(result.data);
 				// 跳转到首页
 				router.push('/');
 			}
