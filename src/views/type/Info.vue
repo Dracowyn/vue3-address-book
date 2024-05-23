@@ -97,13 +97,8 @@ onMounted(() => {
 		<van-cell title="分类名称" :value="typeInfo.name"/>
 	</van-cell-group>
 
-	<div class="button-box">
-		<van-button
-			type="danger"
-			block
-			@click="onDelete"
-			style="margin:auto"
-		>
+	<div style="margin: 16px;">
+		<van-button round block type="danger">
 			删除分类
 		</van-button>
 	</div>
@@ -111,8 +106,4 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.button-box {
-	width: 100%;
-	padding: var(--van-cell-vertical-padding) var(--van-cell-horizontal-padding);
-}
 </style>

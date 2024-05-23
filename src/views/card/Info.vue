@@ -120,21 +120,12 @@ onMounted(() => {
 		<van-cell title="备注" :label="cardInfo.remark"/>
 	</van-cell-group>
 
-	<div class="button-box">
-		<van-button
-			type="danger"
-			block
-			@click="confirmDelete"
-			style="margin:auto"
-		>
+	<div style="margin: 16px;">
+		<van-button round block type="danger">
 			删除联系人
 		</van-button>
 	</div>
 </template>
 
 <style scoped lang="scss">
-.button-box {
-	width: 100%;
-	padding: var(--van-cell-vertical-padding) var(--van-cell-horizontal-padding);
-}
 </style>
