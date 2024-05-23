@@ -45,6 +45,17 @@ const router = createRouter({
 			}
 		},
 
+		// 分类
+		{
+			path: '/type',
+			name: 'Type',
+			component: () => import('../views/type/Index.vue'),
+			meta: {
+				title: '分类',
+				auto: true,
+			}
+		},
+
 		// 登录
 		{
 			path: '/login',
