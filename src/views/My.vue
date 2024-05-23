@@ -32,8 +32,7 @@ const logout = () => {
 		overlay: true,
 		// 确认退出
 		onConfirm: () => {
-			// 清除cookie
-			cookies.remove('business');
+			userStore.clearUserInfo()
 			// 提示
 			showToast({
 				type: 'success',
