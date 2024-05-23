@@ -6,7 +6,7 @@ import router from './router'
 
 // Vant
 import 'vant/lib/index.css'
-import Vant, {showNotify} from 'vant'
+import Vant from 'vant'
 
 import {createPinia} from "pinia";
 import {useUserStore} from "@/store/userStore.js";
