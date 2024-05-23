@@ -75,6 +75,16 @@ const router = createRouter({
 				auto: true,
 			}
 		},
+		// 编辑分类
+		{
+			path: '/type/edit/:id',
+			name: 'TypeEdit',
+			component: () => import('../views/type/Edit.vue'),
+			meta: {
+				title: '编辑分类',
+				auto: true,
+			}
+		},
 
 		// 登录
 		{
