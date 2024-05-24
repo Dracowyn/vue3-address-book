@@ -29,6 +29,7 @@ app.router.beforeEach( async (to, from, next) => {
 		const userInfo = userStore.getUserInfo;
 
 		if (!userInfo) {
+			userStore.clearUserInfo()
 			showNotify({
 				type: 'danger',
 				message: '请先登录',

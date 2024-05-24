@@ -19,9 +19,7 @@ export const useUserStore = defineStore({
 
 			// 获取用户信息
 			business.check(data).then(res => {
-				if (res.code === 1) {
-					userInfo = res.data;
-				} else {
+				if (res.code !== 1) {
 					userInfo = null;
 					cookies.remove('business');
 				}
@@ -43,6 +41,7 @@ export const useUserStore = defineStore({
 		// 设置用户信息
 		setUserInfo(userInfo) {
 			this.userInfo = userInfo;
+			console.log(this.userInfo)
 			const {cookies} = useCookies();
 			cookies.set('business', userInfo);
 		},
@@ -53,8 +52,12 @@ export const useUserStore = defineStore({
 			cookies.remove('business');
 		},
 		// 更新用户信息
-		updateUserInfo(data) {
+		updateUserInfo() {
 			const {cookies} = useCookies();
+			const data = {
+				id: this.userInfo.id,
+				mobile: this.userInfo.mobile,
+			}
 			business.check(data).then(res => {
 				if (res.code === 1) {
 					this.userInfo = res.data;
