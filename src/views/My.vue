@@ -65,6 +65,13 @@ const logout = () => {
 		/>
 	</div>
 
+	<!-- 昵称 -->
+	<van-cell-group>
+		<van-cell title="昵称" :value="userInfo.nickname" v-show="userInfo.nickname"/>
+		<van-cell title="昵称" value="未设置" v-show="!userInfo.nickname"/>
+		<van-cell title="手机号" :value="userInfo.mobile"/>
+	</van-cell-group>
+
 	<van-cell-group>
 		<van-cell title="修改资料" is-link to="/profile"/>
 		<van-cell title="退出登录" is-link @click="logout"/>
