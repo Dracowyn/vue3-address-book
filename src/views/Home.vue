@@ -170,14 +170,8 @@ const onConfirmDelete = async (id) => {
 			message: '删除成功',
 			duration: 1500,
 			onClose: () => {
-				// 更新列表数据
-				list.value = [];
-				listCount.value = 0;
-				page.value = 1;
-				loading.value = true;
-				finished.value = false;
-				// 重新加载通讯录列表
-				onLoad();
+				// 从列表中删除
+				list.value = list.value.filter(item => item.id !== id);
 			}
 		});
 	} else {
