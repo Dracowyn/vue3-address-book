@@ -14,5 +14,9 @@ export default defineConfig({
 			// 修复第三方库找不到vue的问题
 			vue: "vue/dist/vue.esm-bundler.js",
 		}
-	}
+	},
+	esbuild: {
+		// 打包去除console和debugger
+		drop: ['console', 'debugger'],
+	},
 })
