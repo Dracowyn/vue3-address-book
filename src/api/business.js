@@ -25,6 +25,12 @@ const Business = {
 			url: '/business/profile',
 			params: data
 		})
+	},
+	password(data) {
+		return POST({
+			url: '/business/password',
+			params: data
+		})
 	}
 }
 

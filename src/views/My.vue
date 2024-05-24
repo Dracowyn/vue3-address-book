@@ -74,6 +74,7 @@ const logout = () => {
 
 	<van-cell-group>
 		<van-cell title="修改资料" is-link to="/profile"/>
+		<van-cell title="修改密码" is-link to="/password"/>
 		<van-cell title="退出登录" is-link @click="logout"/>
 	</van-cell-group>
 

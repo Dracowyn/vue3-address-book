@@ -42,6 +42,16 @@ const User = [
 			auto: true,
 		}
 	},
+	// 修改密码
+	{
+		path: '/password',
+		name: 'Password',
+		component: () => import('@/views/Password.vue'),
+		meta: {
+			title: '修改密码',
+			auto: true,
+		}
+	},
 ]
 
 export default User
