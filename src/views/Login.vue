@@ -11,6 +11,8 @@ const password = ref('');
 const userStore = useUserStore();
 const userInfo = userStore.getUserInfo;
 
+const url = import.meta.env.VITE_APP_BASE_URL;
+
 // 验证是否登录
 const checkLogin = async () => {
 
@@ -65,6 +67,7 @@ const onSubmit = async (values) => {
 			message: '登录成功',
 			duration: 1500,
 			onClose: () => {
+				result.data.avatar = url + result.data.avatar;
 				userStore.setUserInfo(result.data);
 				// 跳转到首页
 				router.push('/');
