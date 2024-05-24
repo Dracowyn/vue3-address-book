@@ -1,4 +1,4 @@
-import {POST} from "@/services/request.js";
+import {POST, UPLOAD} from "@/services/request.js";
 
 
 const Business = {
@@ -17,6 +17,12 @@ const Business = {
 	check(data) {
 		return POST({
 			url: '/business/check',
+			params: data
+		})
+	},
+	profile(data) {
+		return UPLOAD({
+			url: '/business/profile',
 			params: data
 		})
 	}

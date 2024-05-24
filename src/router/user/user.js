@@ -32,6 +32,16 @@ const User = [
 			auto: true,
 		}
 	},
+	// 修改资料
+	{
+		path: '/profile',
+		name: 'Profile',
+		component: () => import('@/views/Profile.vue'),
+		meta: {
+			title: '修改资料',
+			auto: true,
+		}
+	},
 ]
 
 export default User
